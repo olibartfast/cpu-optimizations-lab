@@ -1,0 +1,30 @@
+{
+  "models": [
+    {
+      "title": "Claude 3.5 Sonnet",
+      "provider": "anthropic",
+      "model": "claude-3-5-sonnet-20241022",
+      "apiKey": ""
+    }
+  ],
+  "tabAutocompleteModel": {
+    "title": "Claude 3.5 Sonnet",
+    "provider": "anthropic",
+    "model": "claude-3-5-sonnet-20241022",
+    "apiKey": ""
+  },
+  "embeddingsProvider": {
+    "provider": "free-trial"
+  },
+  "experimental": {
+    "modelContextProtocolServers": [
+      {
+        "name": "cpu-optimization-rag",
+        "command": "python",
+        "args": [
+          "/workspaces/cpu-optimizations-lab/mcp-server/server.py"
+        ]
+      }
+    ]
+  }
+}
