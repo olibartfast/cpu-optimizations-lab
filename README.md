@@ -227,6 +227,7 @@ BENCHMARK(BM_YourFunction);
 - [Algorithms for Modern Hardware](https://en.algorithmica.org/hpc/)
 - [Intel Intrinsics Guide](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/)
 - [Compiler Explorer](https://godbolt.org/) - View assembly output
+- [LeetCPU] - https://www.leetcpu.com/
 
 ### Related Projects
 - [perf-ninja](https://github.com/dendibakh/perf-ninja) - Performance optimization course
