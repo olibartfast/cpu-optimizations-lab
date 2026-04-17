@@ -61,9 +61,15 @@ Each project's README documents the binaries it produces and how to run them.
 
 ## Lab Overview
 
+### Branch Prediction: `branch-prediction-bench`
+
+Threshold query on 100K integers, 100 passes. Eliminate branch misprediction by preprocessing the array once before the repeated scans.
+
+See [src/branch_prediction/branch-prediction-bench/README.md](src/branch_prediction/branch-prediction-bench/README.md) for problem statement, constraints, targets, and measured results.
+
 | # | Lab | Status | Focus |
 |---|-----|--------|-------|
-| 1 | Branch Prediction | ✅ Implemented | Naive → sorted → branchless → ternary |
+| 1 | Branch Prediction | ✅ Implemented | Threshold query on random array: sort to eliminate branch misprediction |
 | 2 | Cache Optimization | Planned | Cache-friendly data structures and access patterns |
 | 3 | SIMD Basics | Planned | Introduction to vectorization |
 | 4 | Memory Bound Optimizations | Planned | Memory bandwidth optimization |

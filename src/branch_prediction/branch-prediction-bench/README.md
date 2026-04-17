@@ -1,5 +1,28 @@
 # Branch Prediction Benchmark
 
+## Problem
+
+Answer the same threshold query (`arr[i] > 128`) 100 times on an array of 100,000 integers.
+
+The baseline scans a random-order array. Because the branch is nearly 50/50 on random data, the branch predictor mispredicts on ~half the elements.
+
+**Task:** Implement `long solve(int *arr, int n)` that returns the total sum of all values > 128 across 100 full passes. You may preprocess the array **once** before the repeated scans begin. All original values must be preserved and the output must match the reference sum exactly.
+
+**Hint:** A stable partition — all values ≤ 128 first, then all values > 128 — turns a nearly random branch into two long predictable runs.
+
+**Constraints:**
+- One up-front preprocessing step allowed; no SIMD intrinsics; no multithreading
+- Output must equal the reference total across all 100 passes
+
+**Targets:**
+
+| Metric | Target |
+|--------|--------|
+| Branch MPKI | < 1.5 |
+| IPC | > 2.6 |
+
+---
+
 Demonstrates the performance impact of branch mispredictions and how to eliminate them.
 Four implementations of the same summation kernel are compared side-by-side.
 
@@ -82,3 +105,32 @@ On a typical x86-64 CPU with `N=100000`, `REPEATS=100`:
 - **Naive** — high `branch-misses` (~50 % of branches for random data)
 - **Sorted** — near-zero misses once the branch transitions at index ~50 %
 - **Branchless / Ternary** — near-zero misses; compiler emits `cmov` / SIMD at `-O2+`
+
+### Key metrics
+
+**IPC (Instructions Per Cycle)** — how many instructions retire each clock tick. Higher = better. Mispredictions drain the pipeline and lower IPC.
+
+$$\text{IPC} = \frac{\text{instructions}}{\text{cycles}}$$
+
+**MPKI (Misses Per Kilo-Instructions)** — branch mispredictions normalized by instruction count, so results are comparable across implementations that do different amounts of work. Lower = better. Each misprediction costs ~15–20 wasted cycles on a modern out-of-order CPU.
+
+$$\text{MPKI} = \frac{\text{branch-misses} \times 1000}{\text{instructions}}$$
+
+### Measured results (`perf stat`, x86-64)
+
+| Implementation | Opt | Cycles | IPC | Branch Miss% | MPKI |
+|----------------|-----|-------:|----:|-------------:|-----:|
+| naive | O0 | 263M | 0.73 | 21.0% | 26.9 |
+| naive | O3 | 16.5M | 1.76 | 2.2% | 2.1 |
+| sorted | O0 | 140M | 1.92 | 1.4% | 1.8 |
+| sorted | O3 | 26.4M | 1.49 | 8.3% | 11.4 |
+| branchless | O0 | 85M | **2.37** | 0.8% | **0.59** |
+| branchless | O3 | 10.9M | 2.20 | 2.2% | 2.5 |
+| ternary | O0 | 261M | 0.73 | 17.4% | 26.7 |
+| ternary | O3 | 15.1M | 1.93 | 2.2% | 2.1 |
+
+Reproduce with:
+
+```bash
+perf stat -e cycles,instructions,branches,branch-misses ./build/bench_<impl>_<opt>
+```
