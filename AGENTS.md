@@ -13,7 +13,7 @@ A hands-on CPU performance optimization curriculum with 8 progressive C++17 lab 
 /
 ├── src/                        # C++17 lab source files (one directory per lab topic)
 │   ├── cache_optimization/
-│   ├── branch_prediction/      # Branch prediction lab (bench_O0, bench_O3)
+│   ├── branch_prediction/      # Branch prediction (one subfolder per project)
 │   ├── simd_basics/
 │   ├── memory_bound_optimizations/
 │   ├── data_structures_for_performance/
