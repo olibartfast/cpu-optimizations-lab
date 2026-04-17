@@ -11,8 +11,15 @@ A hands-on CPU performance optimization curriculum with 8 progressive C++17 lab 
 
 ```
 /
-├── src/                        # C++17 lab source files
-│   └── branch_benchmark/       # Branch prediction lab (bench_O0, bench_O3)
+├── src/                        # C++17 lab source files (one directory per lab topic)
+│   ├── cache_optimization/
+│   ├── branch_prediction/      # Branch prediction lab (bench_O0, bench_O3)
+│   ├── simd_basics/
+│   ├── memory_bound_optimizations/
+│   ├── data_structures_for_performance/
+│   ├── highway_simd_library/
+│   ├── advanced_vectorization/
+│   └── real_world_scenarios/
 ├── mcp-server/                 # Python MCP server for RAG assistance
 │   ├── server.py               # Entry point; 5 MCP tools, SimpleRetrievalProvider
 │   ├── knowledge_base.py       # Static LEARNING_RESOURCES dict (only data source)

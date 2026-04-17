@@ -29,14 +29,14 @@ Master practical CPU optimization techniques including:
 ```
 cpu-optimization-lab/
 ├── labs/
-│   ├── 01-cache-optimization/      # Cache-friendly algorithms
-│   ├── 02-branch-prediction/       # Control flow optimization
-│   ├── 03-simd-basics/             # Introduction to SIMD
-│   ├── 04-memory-bound/            # Memory bandwidth optimization
-│   ├── 05-data-structures/         # Performance-oriented data structures
-│   ├── 06-highway-simd/            # Highway library exercises
-│   ├── 07-advanced-vectorization/  # Complex SIMD patterns
-│   └── 08-real-world/              # Real-world optimization scenarios
+│   ├── cache-optimization/      # Cache-friendly algorithms
+│   ├── branch-prediction/       # Control flow optimization
+│   ├── simd-basics/             # Introduction to SIMD
+│   ├── memory-bound/            # Memory bandwidth optimization
+│   ├── data-structures/         # Performance-oriented data structures
+│   ├── highway-simd/            # Highway library exercises
+│   ├── advanced-vectorization/  # Complex SIMD patterns
+│   └── real-world/              # Real-world optimization scenarios
 ├── tools/
 │   ├── benchmark/                  # Benchmarking utilities
 │   └── profiling/                  # Profiling helpers
@@ -93,53 +93,29 @@ make
 
 ## 📖 Lab Overview
 
-### Lab 1: Cache Optimization
-**Time:** 1-2 hours  
+### Cache Optimization
 **Focus:** Cache-friendly data structures and access patterns
 
-Learn to identify and fix cache misses, optimize array traversal, and implement cache-oblivious algorithms.
-
-### Lab 2: Branch Prediction
-**Time:** 1-2 hours  
+### Branch Prediction
 **Focus:** Branch misprediction elimination
 
-Eliminate branch mispredictions using cmov, lookup tables, and branchless algorithms.
-
-### Lab 3: SIMD Basics
-**Time:** 2-3 hours  
+### SIMD Basics
 **Focus:** Introduction to vectorization
 
-Learn the fundamentals of SIMD programming with portable intrinsics.
-
-### Lab 4: Memory Bound Optimizations
-**Time:** 2-3 hours  
+### Memory Bound Optimizations
 **Focus:** Memory bandwidth optimization
 
-Optimize for memory-bound workloads using prefetching, streaming, and data layout transformations.
-
-### Lab 5: Data Structures for Performance
-**Time:** 2-3 hours  
+### Data Structures for Performance
 **Focus:** Structure-of-Arrays and cache-friendly layouts
 
-Design data structures optimized for modern CPU architectures.
-
-### Lab 6: Highway SIMD Library
-**Time:** 3-4 hours  
+### Highway SIMD Library
 **Focus:** Portable SIMD with Google Highway
 
-Implement performance-critical algorithms using the Highway library for cross-platform vectorization.
-
-### Lab 7: Advanced Vectorization
-**Time:** 3-4 hours  
+### Advanced Vectorization
 **Focus:** Complex SIMD patterns
 
-Master gather/scatter, masked operations, and horizontal reductions.
-
-### Lab 8: Real-World Scenarios
-**Time:** 4+ hours  
+### Real-World Scenarios
 **Focus:** Complete optimization projects
-
-Apply all learned techniques to realistic performance problems.
 
 ## 🎓 How to Use This Lab
 
