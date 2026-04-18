@@ -125,6 +125,7 @@ valgrind --tool=cachegrind ./your_program
 - *Agner Fog's Optimization Manuals* — [free online](https://www.agner.org/optimize/)
 
 ### Online Resources
+- [LeetCPU - A playground for exploring and optimizing CPU performance—branch prediction, cache locality, ILP, and memory hierarchy](https://www.leetcpu.com/)
 - [Algorithms for Modern Hardware](https://en.algorithmica.org/hpc/)
 - [Intel Intrinsics Guide](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/)
 - [Compiler Explorer](https://godbolt.org/) — view assembly output
