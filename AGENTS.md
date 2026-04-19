@@ -34,9 +34,14 @@ that provides RAG-based learning assistance via Continue.dev.
 │   └── README.md
 ├── .agents/
 │   └── rules/                  # Repository-specific performance rules for AI agents
-│       ├── ipc-and-ilp.md
-│       ├── cache-hierarchy.md
-│       └── branch-prediction.md
+│       ├── branch_prediction.md
+│       ├── cache_hierarchy.md
+│       ├── fe_performance_analysis.md
+│       ├── memory_hierarchy_latency_hiding.md
+│       ├── optimize_ipc_ilp.md
+│       ├── rob_and_ooo_executions.md
+│       ├── simd_and_vectorization.md
+│       └── tlb_and_address_translation.md
 ├── .github/
 │   └── copilot-instructions.md # VS Code Copilot workspace instructions (references this file)
 ├── README.md                   # Project overview and lab descriptions
@@ -126,9 +131,14 @@ not optional advice.
 
 | File | Topic |
 |---|---|
-| `.agents/rules/ipc-and-ilp.md` | Instruction-Level Parallelism, dependency chains, ROB stalls |
-| `.agents/rules/cache-hierarchy.md` | Cache locality, data layouts, memory access patterns |
-| `.agents/rules/branch-prediction.md` | Branch predictability, branchless patterns, hot/cold path separation |
+| `.agents/rules/branch_prediction.md` | Branch predictability, branchless patterns, hot/cold path separation |
+| `.agents/rules/cache_hierarchy.md` | Cache locality, data layouts, memory access patterns |
+| `.agents/rules/fe_performance_analysis.md` | Frontend stalls, instruction cache pressure, BTB pressure, decode bandwidth |
+| `.agents/rules/memory_hierarchy_latency_hiding.md` | DRAM latency hiding, Memory-Level Parallelism, software/hardware prefetching |
+| `.agents/rules/optimize_ipc_ilp.md` | IPC, Instruction-Level Parallelism, dependency chains, loop unrolling |
+| `.agents/rules/rob_and_ooo_executions.md` | ROB pressure, out-of-order execution diagnostics, compound bottlenecks |
+| `.agents/rules/simd_and_vectorization.md` | SIMD opportunities, auto-vectorization blockers, lane utilization |
+| `.agents/rules/tlb_and_address_translation.md` | TLB misses, page working set size, address translation overhead |
 
 ### When to Apply Rules
 
@@ -137,8 +147,11 @@ Agents must consult `.agents/rules/` before modifying any code that involves:
 - Hot loops
 - Branch-heavy logic
 - Cache-sensitive data access
+- Frontend-bound or instruction-cache-sensitive hot paths
 - SIMD or vectorized code
 - Memory-bound workloads
+- DRAM-latency-bound workloads that need latency hiding or prefetching
+- TLB/page-locality-sensitive access patterns
 - Benchmarked lab exercises
 
 ### Rule Application Expectations
@@ -146,11 +159,16 @@ Agents must consult `.agents/rules/` before modifying any code that involves:
 When editing performance-critical code, agents must:
 
 - Check for dependency chains that reduce IPC
+- Diagnose frontend vs backend vs memory vs branch bottlenecks before optimizing
+- Check for ROB pressure and out-of-order execution limits when profiling indicates low IPC
 - Improve instruction-level parallelism where appropriate
 - Preserve or improve spatial and temporal cache locality
 - Prefer contiguous memory access patterns
+- Improve page locality and reduce unnecessary address translation overhead
+- Expose Memory-Level Parallelism and use prefetching only when it matches the access pattern
 - Reduce unpredictable branches in hot paths
 - Separate hot/common paths from cold/rare paths
+- Write vectorization-friendly loops and layouts when data-parallel work is present
 - Avoid changes that harm correctness or readability without measurable benefit
 
 ### Optimization Priority Order
@@ -170,9 +188,11 @@ recommend measuring relevant metrics:
 
 | Category | Metrics |
 |---|---|
+| Frontend | Frontend Stall %, L1I MPKI, BTB Miss Rate, Fetch Bubbles |
 | IPC / Pipeline | IPC, Pipeline Efficiency %, ROB Occupancy |
 | Cache | L1D MPKI, LLC MPKI, DRAM Transactions, Avg Miss Latency |
 | Branch | Branch Accuracy %, Branch MPKI, IPC Lost to Branch Mispredictions |
+| Translation | dTLB Miss Rate, dTLB MPKI, Page Working Set Size |
 
 ---
 
@@ -185,4 +205,3 @@ recommend measuring relevant metrics:
 - C++ labs currently use standalone `g++` compilation (not CMake) — a root
   `CMakeLists.txt` does not yet exist.
 - The knowledge base is purely static — there is no external data loading.
-
