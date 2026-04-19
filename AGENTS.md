@@ -33,6 +33,11 @@ that provides RAG-based learning assistance via Continue.dev.
 │   ├── EXAMPLES.md             # 10 usage examples for Continue.dev
 │   └── README.md
 ├── .agents/
+│   ├── agents/                 # Reusable custom-agent definitions and prompts
+│   │   ├── perf-diagnoser/
+│   │   ├── simd-reviewer/
+│   │   ├── lab-author/
+│   │   └── mcp-kb-editor/
 │   └── rules/                  # Repository-specific performance rules for AI agents
 │       ├── branch_prediction.md
 │       ├── cache_hierarchy.md
@@ -114,10 +119,54 @@ sudo apt-get install cmake build-essential libgtest-dev
   this file's structure table.
 - When adding a knowledge base resource, edit `mcp-server/knowledge_base.py` directly
   (no external loading).
+- Place reusable custom agents under `.agents/agents/`, using one directory per agent.
+- Each custom agent directory should include:
+  - `agent.md` for purpose, scope, inputs/outputs, and handoff expectations
+  - `prompt.md` for the reusable instruction prompt
+- Prefer role-based agents such as `perf-diagnoser` or `simd-reviewer` over narrow,
+  one-off agents tied to a single file or task.
 - When a new convention, pitfall, or build step is discovered, **update this file immediately**.
 - Do not pollute the global Python environment — always work inside `mcp-server/venv`.
 - Before changing performance-sensitive C++ code, read the relevant rules in `.agents/rules/`
   and apply them explicitly.
+
+---
+
+## Custom Agents
+
+Custom agents live in `.agents/agents/` and are intended to be reusable across multiple
+tasks in this repository.
+
+### Custom Agent Layout
+
+Use this layout for each agent:
+
+```text
+.agents/agents/<agent-name>/
+├── agent.md   # What the agent does, when to use it, expected inputs/outputs
+└── prompt.md  # Reusable instructions for the agent
+```
+
+### Naming Conventions
+
+- Use lowercase kebab-case directory names.
+- Prefer stable role names (`perf-diagnoser`) over task names (`fix-loop-2`).
+- Keep agents focused on a single area of responsibility.
+
+### Current Recommended Agents
+
+| Agent | Primary Responsibility |
+|---|---|
+| `perf-diagnoser` | Classify bottlenecks and suggest the next measurement or optimization direction |
+| `simd-reviewer` | Review SIMD readiness, vectorization blockers, and Highway-friendly loop structure |
+| `lab-author` | Create or extend lab exercises in the repository's existing teaching format |
+| `mcp-kb-editor` | Update `mcp-server/knowledge_base.py` consistently and safely |
+
+### Usage Expectations
+
+- Custom agents must follow this file and the normative guidance in `.agents/rules/`.
+- Performance-oriented agents should cite the relevant rule files they relied on.
+- Custom agents are advisory by default unless the calling workflow explicitly allows edits.
 
 ---
 
