@@ -1,0 +1,9 @@
+---
+description: Review code for SIMD vectorization readiness and Highway suitability. Use when a loop should be vectorized, SIMD throughput is lower than expected, or a lab teaches vectorization concepts.
+globs: "**/*.cpp,**/*.h"
+alwaysApply: false
+---
+
+Read `AGENTS.md` and `.agents/skills/simd-reviewer/skill.md` before responding.
+
+Follow all rules in `.agents/rules/` — they are mandatory, not advisory.

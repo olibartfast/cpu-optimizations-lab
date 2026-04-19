@@ -33,8 +33,11 @@ that provides RAG-based learning assistance via Continue.dev.
 │   ├── EXAMPLES.md             # 10 usage examples for Continue.dev
 │   └── README.md
 ├── .agents/
-│   ├── agents/                 # Reusable custom-agent definitions and prompts
+│   ├── README.md               # Agent layout and adapter guidance
+│   ├── skills/                 # Canonical reusable agent instructions (source of truth)
 │   │   ├── perf-diagnoser/
+│   │   │   ├── agent.md        # Metadata: purpose, inputs, outputs, constraints
+│   │   │   └── skill.md        # Reusable prompt — invoke this from any tool
 │   │   ├── simd-reviewer/
 │   │   ├── lab-author/
 │   │   └── mcp-kb-editor/
@@ -47,7 +50,18 @@ that provides RAG-based learning assistance via Continue.dev.
 │       ├── rob_and_ooo_executions.md
 │       ├── simd_and_vectorization.md
 │       └── tlb_and_address_translation.md
+├── .claude/
+│   └── agents/                 # Claude Code-native thin wrappers (reference .agents/skills/)
+├── .codex/
+│   └── agents/                 # Codex-native thin wrappers (.toml, reference .agents/skills/)
+├── .cursor/
+│   └── rules/                  # Cursor rules (.mdc, reference .agents/skills/)
+├── .gemini/
+│   └── agents/                 # Gemini-native thin wrappers (reference .agents/skills/)
+├── .opencode/
+│   └── agent/                  # OpenCode-native thin wrappers (reference .agents/skills/)
 ├── .github/
+│   ├── agents/                 # Copilot-native thin wrappers (reference .agents/skills/)
 │   └── copilot-instructions.md # VS Code Copilot workspace instructions (references this file)
 ├── README.md                   # Project overview and lab descriptions
 └── AGENTS.md                   # This file — agent-facing conventions (keep up to date)
@@ -119,11 +133,14 @@ sudo apt-get install cmake build-essential libgtest-dev
   this file's structure table.
 - When adding a knowledge base resource, edit `mcp-server/knowledge_base.py` directly
   (no external loading).
-- Place reusable custom agents under `.agents/agents/`, using one directory per agent.
-- Each custom agent directory should include:
-  - `agent.md` for purpose, scope, inputs/outputs, and handoff expectations
-  - `prompt.md` for the reusable instruction prompt
-- Prefer role-based agents such as `perf-diagnoser` or `simd-reviewer` over narrow,
+- Place reusable custom agents under `.agents/skills/`, using one directory per skill.
+- Each skill directory must contain:
+  - `agent.md` — purpose, scope, inputs/outputs, and constraints (metadata)
+  - `skill.md` — reusable instructions to invoke for that role
+- **`.agents/skills/` is the single source of truth.** Tool-native folders such as
+  `.claude/agents/` are thin wrappers that reference these skill files; never
+  duplicate full instructions there.
+- Prefer role-based skills such as `perf-diagnoser` or `simd-reviewer` over narrow,
   one-off agents tied to a single file or task.
 - When a new convention, pitfall, or build step is discovered, **update this file immediately**.
 - Do not pollute the global Python environment — always work inside `mcp-server/venv`.
@@ -134,18 +151,30 @@ sudo apt-get install cmake build-essential libgtest-dev
 
 ## Custom Agents
 
-Custom agents live in `.agents/agents/` and are intended to be reusable across multiple
-tasks in this repository.
+Skills live in `.agents/skills/` — the **single source of truth**. Each tool-native
+folder is a thin adapter layer that the respective tool discovers natively.
 
-### Custom Agent Layout
-
-Use this layout for each agent:
+### Skill Layout
 
 ```text
-.agents/agents/<agent-name>/
-├── agent.md   # What the agent does, when to use it, expected inputs/outputs
-└── prompt.md  # Reusable instructions for the agent
+.agents/skills/<name>/
+├── agent.md   # Metadata: purpose, when to use, inputs, outputs, constraints
+└── skill.md   # Reusable instructions — this is what tools invoke
 ```
+
+### Tool-Native Adapter Folders
+
+| Folder | Tool | Format |
+|---|---|---|
+| `.claude/agents/` | Claude Code | Markdown + YAML frontmatter |
+| `.codex/agents/` | OpenAI Codex | TOML |
+| `.cursor/rules/` | Cursor | MDC (Markdown + YAML frontmatter) |
+| `.gemini/agents/` | Gemini CLI | Markdown + YAML frontmatter |
+| `.github/agents/` | GitHub Copilot | Markdown + YAML frontmatter |
+| `.opencode/agent/` | OpenCode | Markdown + YAML frontmatter |
+
+Each wrapper contains only a description and two lines: read `AGENTS.md` and the
+canonical `skill.md`. Never duplicate the full instructions in a wrapper.
 
 ### Naming Conventions
 
@@ -153,9 +182,9 @@ Use this layout for each agent:
 - Prefer stable role names (`perf-diagnoser`) over task names (`fix-loop-2`).
 - Keep agents focused on a single area of responsibility.
 
-### Current Recommended Agents
+### Current Skills
 
-| Agent | Primary Responsibility |
+| Skill | Primary Responsibility |
 |---|---|
 | `perf-diagnoser` | Classify bottlenecks and suggest the next measurement or optimization direction |
 | `simd-reviewer` | Review SIMD readiness, vectorization blockers, and Highway-friendly loop structure |
