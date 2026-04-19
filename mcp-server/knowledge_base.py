@@ -6,6 +6,8 @@ LEARNING_RESOURCES = {
             "id": "perf-analysis-tuning",
             "title": "Performance Analysis and Tuning on Modern CPUs",
             "author": "Denis Bakhvalov",
+            "url": "https://github.com/dendibakh/perf-book",
+            "level": "intermediate",
             "topics": ["performance analysis", "cpu tuning", "profiling", "optimization"],
             "description": "Comprehensive guide to analyzing and tuning performance on modern CPUs"
         },
@@ -13,6 +15,8 @@ LEARNING_RESOURCES = {
             "id": "comp-arch-quantitative",
             "title": "Computer Architecture: A Quantitative Approach",
             "author": "Hennessy & Patterson",
+            "url": "https://www.elsevier.com/books/computer-architecture/hennessy/978-0-12-811905-1",
+            "level": "advanced",
             "topics": ["computer architecture", "cpu design", "performance modeling"],
             "description": "Classic text on computer architecture principles and quantitative analysis"
         },
@@ -20,9 +24,10 @@ LEARNING_RESOURCES = {
             "id": "agner-fog-manuals",
             "title": "Agner Fog's Optimization Manuals",
             "author": "Agner Fog",
+            "url": "https://www.agner.org/optimize/",
+            "level": "advanced",
             "topics": ["optimization", "assembly", "microarchitecture", "instruction timing"],
-            "description": "Free comprehensive manuals covering low-level optimization techniques",
-            "url": "https://www.agner.org/optimize/"
+            "description": "Free comprehensive manuals covering low-level optimization techniques"
         }
     ],
     "onlineResources": [
