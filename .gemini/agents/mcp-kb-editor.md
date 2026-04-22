@@ -1,0 +1,8 @@
+---
+name: mcp-kb-editor
+description: Maintain the static MCP learning-resource knowledge base. Use when adding or editing resources in mcp-server/knowledge_base.py.
+---
+
+Read `AGENTS.md` and `.agents/skills/mcp-kb-editor/skill.md` before responding.
+
+Follow all rules in `.agents/rules/` — they are mandatory, not advisory.
