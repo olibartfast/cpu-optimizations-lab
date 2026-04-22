@@ -17,6 +17,8 @@ int main() {
     std::generate(data.begin(), data.end(), [&]{ return dist(rng); });
 
     volatile long sink = solve_ternary(data.data(), (int)data.size());
-    std::cout << "ternary checksum=" << sink << "\n";
-    return 0;
+    bool ok = (sink == EXPECTED_CHECKSUM);
+    std::cout << "ternary checksum=" << sink
+              << "  [" << (ok ? "PASS" : "FAIL") << "]\n";
+    return ok ? 0 : 1;
 }

@@ -17,6 +17,8 @@ int main() {
     std::generate(data.begin(), data.end(), [&]{ return dist(rng); });
 
     volatile long sink = solve_naive(data.data(), (int)data.size());
-    std::cout << "naive checksum=" << sink << "\n";
-    return 0;
+    bool ok = (sink == EXPECTED_CHECKSUM);
+    std::cout << "naive checksum=" << sink
+              << "  [" << (ok ? "PASS" : "FAIL") << "]\n";
+    return ok ? 0 : 1;
 }
