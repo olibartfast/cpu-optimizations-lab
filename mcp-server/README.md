@@ -24,7 +24,7 @@ python server.py
 
 ### Use with Continue.dev
 
-Update your `.continuerc.json`:
+Update your `.continuerc.json` (adjust the path to match where you cloned the repo):
 ```json
 {
   "experimental": {
@@ -33,7 +33,7 @@ Update your `.continuerc.json`:
         "name": "cpu-optimization-rag",
         "command": "python",
         "args": [
-          "/workspaces/cpu-optimizations-lab/mcp-server/server.py"
+          "/path/to/cpu-optimizations-lab/mcp-server/server.py"
         ]
       }
     ]
@@ -43,13 +43,15 @@ Update your `.continuerc.json`:
 
 ## Available Tools
 
-- `search_optimization_topics` - Search resources by keyword
-- `get_learning_path` - Get recommended labs by skill level
-- `get_lab_info` - Get details about a specific lab
-- `get_profiling_tools` - Get tools for a specific platform
-- `get_all_resources` - Get complete resource catalog
+- `search_optimization_topics` — Search resources by keyword
+- `get_learning_path` — Get recommended labs by skill level
+- `get_lab_info` — Get details about a lab by id (e.g. `lab-03`) or number (`3`)
+- `get_profiling_tools` — Get tools for a specific platform
+- `get_all_resources` — Get complete resource catalog
+- `search_performance_rules` — Search the repo's normative performance rules (`.agents/rules/`)
 
 ## Available Resources
 
-- `cpu-opt://resources/all` - All learning resources
-- `cpu-opt://labs/overview` - Lab exercises overview
+- `cpu-opt://resources/all` — All learning resources
+- `cpu-opt://labs/overview` — Lab exercises overview
+- `cpu-opt://rules/all` — All performance rule files
